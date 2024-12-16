@@ -1,0 +1,9 @@
+**/*.json
+**/*.md
+**/.git
+**/*.svg
+**/*.yml
+**/*.hbs
+**/node_modules
+build
+coverage
