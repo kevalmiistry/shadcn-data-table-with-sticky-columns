@@ -17,7 +17,11 @@ export default async function Home() {
   return (
     <section className="flex h-screen flex-col overflow-hidden p-4">
       {users ? (
-        <DataTableWithStickyColumns columns={columns} data={users} />
+        <DataTableWithStickyColumns
+          columns={columns}
+          data={users}
+          enableStickyCols
+        />
       ) : (
         "no users"
       )}
