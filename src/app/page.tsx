@@ -1,4 +1,6 @@
+import { DataTableWithStickyColumns } from "@/components/datatable-with-sticky-columns";
 import type { ApiResponse, User } from "@/types";
+import { columns } from "./columns";
 
 export default async function Home() {
   const response = await fetch(
@@ -13,10 +15,12 @@ export default async function Home() {
   const users = result.success ? result.data : null;
 
   return (
-    <section>
-      {users
-        ? users.map((user) => <p key={user.index}>{user.name}</p>)
-        : "no users"}
+    <section className="flex h-screen flex-col overflow-hidden p-4">
+      {users ? (
+        <DataTableWithStickyColumns columns={columns} data={users} />
+      ) : (
+        "no users"
+      )}
     </section>
   );
 }
