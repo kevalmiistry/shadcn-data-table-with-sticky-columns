@@ -15,11 +15,7 @@ export default async function Home() {
   return (
     <section>
       {users
-        ? users.map((user) => (
-            <p key={user.user_id}>
-              {user.first_name} {user.last_name}
-            </p>
-          ))
+        ? users.map((user) => <p key={user.index}>{user.name}</p>)
         : "no users"}
     </section>
   );

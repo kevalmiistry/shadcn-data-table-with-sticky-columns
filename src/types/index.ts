@@ -1,7 +1,6 @@
 export interface User {
-  user_id: number;
-  first_name: string;
-  last_name: string;
+  index: number;
+  name: string;
   email: string;
   phone_number: string;
   street_address: string;
@@ -9,11 +8,11 @@ export interface User {
   state: string;
   postal_code: string;
   country: string;
-  date_of_birth: number;
+  date_of_birth: string;
   company: string;
   job_title: string;
   salary: string;
-  last_login: number;
+  last_login: string;
 }
 
 export interface ApiResponse<T> {
