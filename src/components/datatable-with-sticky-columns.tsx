@@ -134,7 +134,6 @@ export function DataTableWithStickyColumns<TData, TValue>({
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
-              .filter((column) => column.id !== "index" && column.id !== "name")
               .map((column) => (
                 <DropdownMenuCheckboxItem
                   key={column.id}

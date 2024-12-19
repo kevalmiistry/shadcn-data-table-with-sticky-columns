@@ -22,6 +22,7 @@ export const columns: ColumnDef<User>[] = [
         {index}.
       </ColumnCell>
     ),
+    enableHiding: false,
   },
   {
     accessorKey: "name",
@@ -39,6 +40,7 @@ export const columns: ColumnDef<User>[] = [
         {name}
       </ColumnCell>
     ),
+    enableHiding: false,
   },
   {
     accessorKey: "email",
