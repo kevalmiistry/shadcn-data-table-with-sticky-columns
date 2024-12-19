@@ -6,7 +6,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import type { User } from "@/types";
 import type { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<User>[] = [
+export type CustomColumnDef<TData, TValue> = ColumnDef<TData, TValue> & {
+  isSticky?: boolean;
+  fixedWidth?: number;
+};
+
+export const columns: CustomColumnDef<User, unknown>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -21,12 +26,8 @@ export const columns: ColumnDef<User>[] = [
         />
       </ColumnHeader>
     ),
-    cell: ({ row }) => (
-      <ColumnCell
-        isSticky
-        fixedWidth={50}
-        className="flex items-center justify-center"
-      >
+    cell: ({ row, column }) => (
+      <ColumnCell column={column} className="flex items-center justify-center">
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -34,6 +35,8 @@ export const columns: ColumnDef<User>[] = [
         />
       </ColumnCell>
     ),
+    isSticky: true,
+    fixedWidth: 50,
     enableSorting: false,
     enableHiding: false,
   },
@@ -44,15 +47,17 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { name },
       },
+      column,
     }) => (
       <ColumnCell
-        isSticky
-        fixedWidth={250}
+        column={column}
         className="w-max overflow-hidden truncate font-medium"
       >
         {name}
       </ColumnCell>
     ),
+    isSticky: true,
+    fixedWidth: 250,
     enableHiding: false,
   },
   {
@@ -62,7 +67,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { email },
       },
-    }) => <ColumnCell className="w-max">{email}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {email}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "phone_number",
@@ -73,7 +83,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { phone_number },
       },
-    }) => <ColumnCell className="w-max">{phone_number}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {phone_number}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "street_address",
@@ -84,7 +99,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { street_address },
       },
-    }) => <ColumnCell className="w-max">{street_address}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {street_address}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "city",
@@ -93,7 +113,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { city },
       },
-    }) => <ColumnCell className="w-max">{city}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {city}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "state",
@@ -102,7 +127,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { state },
       },
-    }) => <ColumnCell className="w-max">{state}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {state}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "postal_code",
@@ -113,7 +143,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { postal_code },
       },
-    }) => <ColumnCell className="w-max">{postal_code}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {postal_code}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "country",
@@ -124,7 +159,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { country },
       },
-    }) => <ColumnCell className="w-max">{country}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {country}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "date_of_birth",
@@ -135,8 +175,9 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { date_of_birth },
       },
+      column,
     }) => (
-      <ColumnCell className="w-max">
+      <ColumnCell column={column} className="w-max">
         {new Date(date_of_birth).toLocaleString("en-US", {
           year: "numeric",
           month: "long",
@@ -154,7 +195,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { company },
       },
-    }) => <ColumnCell className="w-max">{company}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {company}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "job_title",
@@ -165,7 +211,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { job_title },
       },
-    }) => <ColumnCell className="w-max">{job_title}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        {job_title}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "salary",
@@ -174,7 +225,12 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { salary },
       },
-    }) => <ColumnCell className="w-max">${salary.toLocaleString()}</ColumnCell>,
+      column,
+    }) => (
+      <ColumnCell column={column} className="w-max">
+        ${salary.toLocaleString()}
+      </ColumnCell>
+    ),
   },
   {
     accessorKey: "last_login",
@@ -185,8 +241,9 @@ export const columns: ColumnDef<User>[] = [
       row: {
         original: { last_login },
       },
+      column,
     }) => (
-      <ColumnCell className="w-max">
+      <ColumnCell column={column} className="w-max">
         {new Date(last_login).toLocaleString("en-US", {
           year: "numeric",
           month: "long",

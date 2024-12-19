@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  CellContext,
-  ColumnDef,
   ColumnFiltersState,
   flexRender,
   getCoreRowModel,
@@ -32,9 +30,10 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
+import { CustomColumnDef } from "@/app/columns";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  columns: CustomColumnDef<TData, TValue>[];
   data: TData[];
   enableStickyCols?: boolean;
 }
@@ -46,28 +45,9 @@ export function DataTableWithStickyColumns<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const stickyColsPoints: number[] = useMemo(() => {
     return columns
-      .filter((item, idx) =>
-        typeof item.cell === "function"
-          ? item.cell({
-              row: {
-                original: data[idx],
-                getIsSelected: () => null,
-              },
-            } as unknown as CellContext<TData, TValue>)?.props?.isSticky ===
-            true
-          : false
-      )
-      .map((item, idx) =>
-        typeof item.cell === "function"
-          ? item.cell({
-              row: {
-                original: data[idx],
-                getIsSelected: () => null,
-              },
-            } as unknown as CellContext<TData, TValue>)?.props?.fixedWidth
-          : 0
-      );
-  }, [columns, data]);
+      .filter((item) => item.isSticky)
+      .map((item) => item.fixedWidth ?? 0);
+  }, [columns]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

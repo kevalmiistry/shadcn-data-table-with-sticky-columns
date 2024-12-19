@@ -1,33 +1,27 @@
+import { CustomColumnDef } from "@/app/columns";
 import { cn } from "@/lib/utils";
+import { User } from "@/types";
+import { Column } from "@tanstack/react-table";
 import type { FC, ReactNode } from "react";
 
-interface BaseProps {
+interface Props {
   children: ReactNode;
   className?: string;
+  column: Column<User, unknown>;
 }
 
-interface StickyProps extends BaseProps {
-  isSticky: true;
-  fixedWidth: number;
-}
+export const ColumnCell: FC<Props> = ({ children, className = "", column }) => {
+  const { isSticky, fixedWidth } = column.columnDef as CustomColumnDef<
+    User,
+    unknown
+  >;
 
-interface NonStickyProps extends BaseProps {
-  isSticky?: false;
-  fixedWidth?: number | null;
-}
-
-type Props = StickyProps | NonStickyProps;
-
-export const ColumnCell: FC<Props> = ({
-  children,
-  className = "",
-  isSticky = false,
-  fixedWidth = null,
-}) => (
-  <div
-    className={cn("", className)}
-    style={isSticky && fixedWidth !== null ? { width: `${fixedWidth}px` } : {}}
-  >
-    {children}
-  </div>
-);
+  return (
+    <div
+      className={cn("", className)}
+      style={isSticky && fixedWidth ? { width: `${fixedWidth}px` } : {}}
+    >
+      {children}
+    </div>
+  );
+};
