@@ -5,6 +5,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/table";
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { DataTablePagination } from "./datatable-pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -51,6 +53,7 @@ export function DataTableWithStickyColumns<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   const getStickyProperties = (idx: number) => {
@@ -83,7 +86,7 @@ export function DataTableWithStickyColumns<TData, TValue>({
   };
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col gap-4 overflow-hidden">
       <div className="relative z-[0] h-full w-full flex-1 overflow-auto rounded-md border">
         <Table>
           <TableHeader>
@@ -149,6 +152,8 @@ export function DataTableWithStickyColumns<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+
+      <DataTablePagination table={table} />
     </div>
   );
 }
