@@ -11,6 +11,7 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -24,6 +25,13 @@ import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { DataTablePagination } from "./datatable-pagination";
 import { Input } from "./ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Button } from "./ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -56,6 +64,7 @@ export function DataTableWithStickyColumns<TData, TValue>({
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -66,9 +75,11 @@ export function DataTableWithStickyColumns<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
     },
   });
 
@@ -103,7 +114,7 @@ export function DataTableWithStickyColumns<TData, TValue>({
 
   return (
     <div className="flex flex-1 flex-col gap-4 overflow-hidden p-4">
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <Input
           placeholder="Search by name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -112,7 +123,32 @@ export function DataTableWithStickyColumns<TData, TValue>({
           }
           className="max-w-sm"
         />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Manage Columns
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .filter((column) => column.id !== "index" && column.id !== "name")
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.id.replaceAll("_", " ")}
+                </DropdownMenuCheckboxItem>
+              ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
+
       <div className="relative z-[0] h-full w-full flex-1 overflow-auto rounded-md border">
         <Table>
           <TableHeader>
