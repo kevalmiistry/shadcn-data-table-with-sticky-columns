@@ -2,26 +2,39 @@
 
 import { ColumnCell } from "@/components/column-cell";
 import { ColumnHeader } from "@/components/column-header";
+import { Checkbox } from "@/components/ui/checkbox";
 import type { User } from "@/types";
 import type { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "index",
-    header: ({ column }) => (
-      <ColumnHeader column={column} className="justify-center">
-        #
+    id: "select",
+    header: ({ table }) => (
+      <ColumnHeader className="justify-center">
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
       </ColumnHeader>
     ),
-    cell: ({
-      row: {
-        original: { index },
-      },
-    }) => (
-      <ColumnCell isSticky fixedWidth={50} className="text-center">
-        {index}.
+    cell: ({ row }) => (
+      <ColumnCell
+        isSticky
+        fixedWidth={50}
+        className="flex items-center justify-center"
+      >
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
       </ColumnCell>
     ),
+    enableSorting: false,
     enableHiding: false,
   },
   {

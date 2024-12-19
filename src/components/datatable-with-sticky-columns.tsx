@@ -49,15 +49,22 @@ export function DataTableWithStickyColumns<TData, TValue>({
       .filter((item, idx) =>
         typeof item.cell === "function"
           ? item.cell({
-              row: { original: data[idx] },
-            } as CellContext<TData, TValue>)?.props?.isSticky === true
+              row: {
+                original: data[idx],
+                getIsSelected: () => null,
+              },
+            } as unknown as CellContext<TData, TValue>)?.props?.isSticky ===
+            true
           : false
       )
       .map((item, idx) =>
         typeof item.cell === "function"
           ? item.cell({
-              row: { original: data[idx] },
-            } as CellContext<TData, TValue>)?.props?.fixedWidth
+              row: {
+                original: data[idx],
+                getIsSelected: () => null,
+              },
+            } as unknown as CellContext<TData, TValue>)?.props?.fixedWidth
           : 0
       );
   }, [columns, data]);
@@ -65,6 +72,7 @@ export function DataTableWithStickyColumns<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -76,10 +84,12 @@ export function DataTableWithStickyColumns<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
+      rowSelection,
     },
   });
 
