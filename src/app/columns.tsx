@@ -1,16 +1,17 @@
 "use client";
 
 import { ColumnCell } from "@/components/column-cell";
+import { ColumnHeader } from "@/components/column-header";
 import type { User } from "@/types";
 import type { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "index",
-    header: () => (
-      <div className="flex h-9 w-full items-center justify-center border-b text-center">
+    header: ({ column }) => (
+      <ColumnHeader column={column} className="justify-center">
         #
-      </div>
+      </ColumnHeader>
     ),
     cell: ({
       row: {
@@ -24,9 +25,7 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "name",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Name</div>
-    ),
+    header: ({ column }) => <ColumnHeader column={column}>Name</ColumnHeader>,
     cell: ({
       row: {
         original: { name },
@@ -43,9 +42,7 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "email",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Email</div>
-    ),
+    header: ({ column }) => <ColumnHeader column={column}>Email</ColumnHeader>,
     cell: ({
       row: {
         original: { email },
@@ -54,8 +51,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "phone_number",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Phone Number</div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Phone Number</ColumnHeader>
     ),
     cell: ({
       row: {
@@ -65,10 +62,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "street_address",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">
-        Street Address
-      </div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Street Address</ColumnHeader>
     ),
     cell: ({
       row: {
@@ -78,9 +73,7 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "city",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">City</div>
-    ),
+    header: ({ column }) => <ColumnHeader column={column}>City</ColumnHeader>,
     cell: ({
       row: {
         original: { city },
@@ -89,9 +82,7 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "state",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">State</div>
-    ),
+    header: ({ column }) => <ColumnHeader column={column}>State</ColumnHeader>,
     cell: ({
       row: {
         original: { state },
@@ -100,8 +91,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "postal_code",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Postal Code</div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Postal Code</ColumnHeader>
     ),
     cell: ({
       row: {
@@ -111,8 +102,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "country",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Country</div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Country</ColumnHeader>
     ),
     cell: ({
       row: {
@@ -122,8 +113,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "date_of_birth",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Date of Birth</div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Date of Birth</ColumnHeader>
     ),
     cell: ({
       row: {
@@ -141,8 +132,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "company",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Company</div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Company</ColumnHeader>
     ),
     cell: ({
       row: {
@@ -152,8 +143,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "job_title",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Job Title</div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Job Title</ColumnHeader>
     ),
     cell: ({
       row: {
@@ -163,9 +154,7 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "salary",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Salary</div>
-    ),
+    header: ({ column }) => <ColumnHeader column={column}>Salary</ColumnHeader>,
     cell: ({
       row: {
         original: { salary },
@@ -174,8 +163,8 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "last_login",
-    header: () => (
-      <div className="flex h-9 w-full items-center border-b">Last Login</div>
+    header: ({ column }) => (
+      <ColumnHeader column={column}>Last Login</ColumnHeader>
     ),
     cell: ({
       row: {
