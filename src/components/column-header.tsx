@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
-import { User } from "@/types";
 import { Column } from "@tanstack/react-table";
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,17 +10,17 @@ import {
 import { Button } from "./ui/button";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 
-interface Props {
-  column?: Column<User, unknown> | null;
+interface Props<TData, TValue> {
+  column?: Column<TData, TValue> | null;
   children: ReactNode;
   className?: string;
 }
 
-export const ColumnHeader: FC<Props> = ({
+export function ColumnHeader<TData, TValue>({
   column = null,
   children,
   className = "",
-}) => {
+}: Props<TData, TValue>) {
   return (
     <div
       className={cn("flex h-9 w-full items-center border-b", className, {
@@ -68,4 +67,4 @@ export const ColumnHeader: FC<Props> = ({
       )}
     </div>
   );
-};
+}

@@ -1,19 +1,22 @@
 import { CustomColumnDef } from "@/app/columns";
 import { cn } from "@/lib/utils";
-import { User } from "@/types";
 import { Column } from "@tanstack/react-table";
-import type { FC, ReactNode } from "react";
+import type { ReactNode } from "react";
 
-interface Props {
+interface Props<TData, TValue> {
   children: ReactNode;
   className?: string;
-  column: Column<User, unknown>;
+  column: Column<TData, TValue>;
 }
 
-export const ColumnCell: FC<Props> = ({ children, className = "", column }) => {
+export function ColumnCell<TData, TValue>({
+  children,
+  className = "",
+  column,
+}: Props<TData, TValue>) {
   const { isSticky, fixedWidth } = column.columnDef as CustomColumnDef<
-    User,
-    unknown
+    TData,
+    TValue
   >;
 
   return (
@@ -24,4 +27,4 @@ export const ColumnCell: FC<Props> = ({ children, className = "", column }) => {
       {children}
     </div>
   );
-};
+}
