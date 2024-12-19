@@ -3,8 +3,10 @@
 import {
   CellContext,
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
@@ -21,6 +23,7 @@ import {
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { DataTablePagination } from "./datatable-pagination";
+import { Input } from "./ui/input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,6 +55,7 @@ export function DataTableWithStickyColumns<TData, TValue>({
   }, [columns, data]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -60,8 +64,11 @@ export function DataTableWithStickyColumns<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
@@ -95,7 +102,17 @@ export function DataTableWithStickyColumns<TData, TValue>({
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-4 overflow-hidden">
+    <div className="flex flex-1 flex-col gap-4 overflow-hidden p-4">
+      <div className="flex items-center">
+        <Input
+          placeholder="Search by name..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
       <div className="relative z-[0] h-full w-full flex-1 overflow-auto rounded-md border">
         <Table>
           <TableHeader>

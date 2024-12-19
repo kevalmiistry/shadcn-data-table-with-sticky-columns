@@ -15,7 +15,7 @@ export default async function Home() {
   const users = result.success ? result.data : null;
 
   return (
-    <section className="flex h-screen flex-col overflow-hidden p-4">
+    <section className="flex h-screen flex-col overflow-hidden">
       {users ? (
         <DataTableWithStickyColumns
           columns={columns}
