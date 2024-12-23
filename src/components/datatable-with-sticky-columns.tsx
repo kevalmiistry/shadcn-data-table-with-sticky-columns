@@ -98,7 +98,7 @@ export function DataTableWithStickyColumns<TData, TValue>({
     getTdClasses: (idx: number) => {
       return idx < stickyColsPoints.length
         ? "sticky !px-0 bg-background"
-        : "bg-gray-50 dark:bg-gray-900";
+        : "bg-slate-50 dark:bg-white/5";
     },
   };
 
